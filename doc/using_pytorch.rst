@@ -530,9 +530,9 @@ To do this, you need to:
 Write an inference script
 -------------------------
 
-You must create an inference script that implements at least the ``model_fn`` and ``predict_fn`` functions.
-Implementing ``input_fn`` and ``output_fn`` to handle input and output is optional. 
-For information about how to write an inference script, see `Get Predictions from a PyTorch Model <#get-predictions-from-a-pytorch-model>`_.
+You must create an inference script that implements at least the ``predict_fn`` function that calls the loaded model to get a prediction.
+Optionally, you can also implementing ``input_fn`` and ``output_fn`` to process input and output. 
+For information about how to write an inference script, see `Serve a PyTorch Model <#serve-a-pytorch-model>`_.
 Save the inference script as ``inference.py`` in the same folder where you saved your PyTorch model. 
 
 Package model artifacts into a tar.gz file
