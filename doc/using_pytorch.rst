@@ -4,9 +4,9 @@ Using PyTorch with the SageMaker Python SDK
 
 With PyTorch Estimators and Models, you can train and host PyTorch models on Amazon SageMaker.
 
-Supported versions of PyTorch: ``0.4.0``, ``1.0.0``, ``1.1.0``, ``1.2.0``, ``1.3.1``.
+* Supported versions of PyTorch: ``0.4.0``, ``1.0.0``, ``1.1.0``, ``1.2.0``, ``1.3.1``.
 
-Supported versions of PyTorch for Elastic Inference: ``1.3.1``.
+* Supported versions of PyTorch for Elastic Inference: ``1.3.1``.
 
 We recommend that you use the latest supported version, because that's where we focus most of our development efforts.
 
@@ -90,7 +90,7 @@ Note that SageMaker doesn't support argparse actions. If you want to use, for ex
 you need to specify `type` as `bool` in your script and provide an explicit `True` or `False` value for this hyperparameter
 when instantiating PyTorch Estimator.
 
-For more on training environment variables, please visit `SageMaker Containers <https://github.com/aws/sagemaker-containers>`_.
+For more on training environment variables, see `SageMaker Containers <https://github.com/aws/sagemaker-containers>`_.
 
 Save the Model
 --------------
@@ -115,7 +115,7 @@ to a certain filesystem path called ``model_dir``. This value is accessible thro
         with open(os.path.join(args.model_dir, 'model.pth'), 'wb') as f:
             torch.save(model.state_dict(), f)
 
-After your training job is complete, SageMaker will compress and upload the serialized model to S3, and your model data
+After your training job is complete, SageMaker compresses and uploads the serialized model to S3, and your model data
 will be available in the S3 ``output_path`` you specified when you created the PyTorch Estimator.
 
 If you are using Elastic Inference, you must convert your models to the TorchScript format and use ``torch.jit.save`` to save the model.
@@ -519,19 +519,19 @@ Bring your own model
 ====================
 
 You can deploy a PyTorch model that you trained outside of SageMaker by using the ``PyTorchModel`` class.
-Typically, you have saved a PyTorch model as a file with extension ``.pt`` or ``.pth``.
+Typically, you save a PyTorch model as a file with extension ``.pt`` or ``.pth``.
 To do this, you need to:
 
-* Write an inference script
+* Write an inference script.
 * Package the model artifacts into a tar.gz file.
-* Upload the tar.gz file to S3.
+* Upload the tar.gz file to an S3 bucket.
 * Create the ``PyTorchModel`` object.
 
 Write an inference script
 -------------------------
 
-You must create an inference script that implements at least the ``predict_fn`` function that calls the loaded model to get a prediction.
-Optionally, you can also implementing ``input_fn`` and ``output_fn`` to process input and output. 
+You must create an inference script that implements (at least) the ``predict_fn`` function that calls the loaded model to get a prediction.
+Optionally, you can also implement ``input_fn`` and ``output_fn`` to process input and output. 
 For information about how to write an inference script, see `Serve a PyTorch Model <#serve-a-pytorch-model>`_.
 Save the inference script as ``inference.py`` in the same folder where you saved your PyTorch model. 
 
@@ -549,7 +549,7 @@ The directory structure where you saved your PyTorch model should look something
 
 Where ``requirments.txt`` is an optional file that specifies dependencies on third-party libraries.
 
-With the previous file structture, run the following command to package your model as a ``tar.gz`` file:
+With this file structure, run the following command to package your model as a ``tar.gz`` file:
 
 ``tar -czf model.tar.gz my_model code``
 
@@ -579,7 +579,7 @@ Where ``my-bucket`` is the name of your S3 bucket, and ``my-path`` is the folder
      aws s3 cp model.tar.gz s3://my-bucket/my-path/model.tar.gz
 
 
-To run this command, you'll need the AWS CLI tool installed. For information about installing the AWS CLI,
+To run this command, you'll need to have the AWS CLI tool installed. For information about installing the AWS CLI,
 see `Installing the AWS CLI <https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html>`_.
 
 Create a PyTorchModel object
